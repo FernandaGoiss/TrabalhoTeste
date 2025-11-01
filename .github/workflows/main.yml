@@ -31,20 +31,22 @@ jobs:
         shell: msys2 {0}
         run: gcc -Wall -Wextra -O2 main.c -o programa.exe
 
-      - name: Executar programa no Windows (com timeout)
+      - name: Executar programa no Windows com entrada simulada
         if: runner.os == 'Windows'
         shell: msys2 {0}
-        run: timeout 5 ./programa.exe < NUL
+        run: |
+          echo -e "João\n10\n" | ./programa.exe
 
       # --- UBUNTU ---
       - name: Instalar GCC no Ubuntu
         if: runner.os == 'Linux'
-        run: sudo apt update && sudo apt install -y gcc coreutils
+        run: sudo apt update && sudo apt install -y gcc
 
       - name: Compilar no Ubuntu
         if: runner.os == 'Linux'
         run: gcc -Wall -Wextra -O2 main.c -o programa
 
-      - name: Executar programa no Ubuntu (com timeout)
+      - name: Executar programa no Ubuntu com entrada simulada
         if: runner.os == 'Linux'
-        run: timeout 5s ./programa < /dev/null
+        run: |
+          echo -e "João\n10\n" | ./programa
