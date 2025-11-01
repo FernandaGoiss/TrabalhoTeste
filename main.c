@@ -1,8 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
-#include <ctype.h>
+#include <ctype.h>        // Para isdigit
 #include "zoologico.h"
+#include "minunit.h"
+
+extern int tests_run;
 
 struct ficha {
     char nome[100];
@@ -11,10 +14,10 @@ struct ficha {
 };
 
 // Função para ler e validar a quantidade de ingressos
-int lerQuantidade() {
+int lerQuantidade(const char *mensagem) {
     int quantidade, resultado;
     do {
-        printf("Qual a quantidade de ingressos que você deseja comprar? ");
+        printf("%s", mensagem);
         resultado = scanf("%d", &quantidade);
 
         if (resultado != 1) {
@@ -34,7 +37,7 @@ int lerQuantidade() {
 }
 
 // Função para ler e validar o nome do visitante
-void lerNome(char *nome) {
+void lerNome(char *nome, int tamanho) {
     int valido;
     do {
         valido = 1;
@@ -42,8 +45,8 @@ void lerNome(char *nome) {
         scanf(" %[^\n]", nome);
 
         int temLetra = 0;
-        for (int j = 0; nome[j] != '\0'; j++) {
-            if (isdigit((unsigned char)nome[j])) {
+        for (int j = 0; nome[j] != '\0' && j < tamanho; j++) {
+            if (isdigit(nome[j])) {
                 valido = 0;
                 break;
             }
@@ -73,7 +76,7 @@ int lerIdade(char *nome) {
         scanf(" %[^\n]", idadeStr);
 
         for (int k = 0; idadeStr[k] != '\0'; k++) {
-            if (!isdigit((unsigned char)idadeStr[k])) {
+            if (!isdigit(idadeStr[k])) {
                 valido = 0;
                 break;
             }
@@ -98,13 +101,13 @@ int lerIdade(char *nome) {
 }
 
 // Função para calcular o valor do ingresso pela idade
-float calcularValor(int idade) {
+double calcularValor(int idade) {
     if (idade <= 12) return 10.0;
     else if (idade <= 59) return 30.0;
     else return 15.0;
 }
 
-// Função para exibir o resumo dos ingressos
+// Função para exibir o resumo
 void exibirResumo(struct ficha ingresso[], int quantidade, float total) {
     printf("\n------------------------------------------------------------\n");
     printf("                     RESUMO DOS INGRESSOS                   \n");
@@ -128,14 +131,14 @@ int main() {
     printf("                         ZOOLÓGICO                          \n");
     printf("------------------------------------------------------------\n");
 
-    int quantidade = lerQuantidade();
+    int quantidade = lerQuantidade("Qual a quantidade de ingressos que você deseja comprar?: ");
     struct ficha ingresso[5];
     float total = 0;
 
     for (int i = 0; i < quantidade; i++) {
         printf("\n--- Ingresso %d ---\n", i + 1);
 
-        lerNome(ingresso[i].nome);
+        lerNome(ingresso[i].nome, 100);
         ingresso[i].idade = lerIdade(ingresso[i].nome);
         ingresso[i].valor = calcularValor(ingresso[i].idade);
 
