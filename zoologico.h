@@ -2,7 +2,6 @@
 #define TESTES_H
 
 #include "minunit.h"
-#include "zoologico.h"
 #include <stdio.h>
 
 // Necessário para o MinUnit
@@ -58,3 +57,4 @@ static char * rodar_testes() {
 }
 
 #endif // TESTES_H
+
