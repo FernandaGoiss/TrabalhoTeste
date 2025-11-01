@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v4
 
       # --- WINDOWS ---
-      - name: Instalar dependências e compilar (Windows)
+      - name: Instalar dependências (Windows)
         if: runner.os == 'Windows'
         uses: msys2/setup-msys2@v2
         with:
@@ -31,11 +31,10 @@ jobs:
         shell: msys2 {0}
         run: gcc -Wall -Wextra -O2 main.c -o programa.exe
 
-      - name: Executar programa no Windows com entrada simulada
+      - name: Executar programa no Windows
         if: runner.os == 'Windows'
         shell: msys2 {0}
-        run: |
-          echo -e "João\n10\n" | ./programa.exe
+        run: ./programa.exe
 
       # --- UBUNTU ---
       - name: Instalar GCC no Ubuntu
@@ -46,7 +45,6 @@ jobs:
         if: runner.os == 'Linux'
         run: gcc -Wall -Wextra -O2 main.c -o programa
 
-      - name: Executar programa no Ubuntu com entrada simulada
+      - name: Executar programa no Ubuntu
         if: runner.os == 'Linux'
-        run: |
-          echo -e "João\n10\n" | ./programa
+        run: ./programa
