@@ -2,16 +2,16 @@
 #include "zoologico.h"
 #include <stdio.h>
 
-// Necess·rio para o MinUnit
+// Necess√°rio para o MinUnit
 int tests_run = 0;
 
-// FunÁ„o de teste para a funÁ„o 'calcularValor'
+// Fun√ß√£o de teste para a fun√ß√£o 'calcularValor'
 char * test_calcularValor() {
-    // Casos de teste de PartiÁ„o Equivalente e An·lise de Valor Limite
+    // Casos de teste de Parti√ß√£o Equivalente e An√°lise de Valor Limite
 
-    // Testes para CrianÁa (idade <= 12)
-    mu_assert("CrianÁa: 10 anos deveria ser R$ 10.00", calcularValor(10) == 10.0);
-    mu_assert("CrianÁa no limite superior: 12 anos deveria ser R$ 10.00", calcularValor(12) == 10.0);
+    // Testes para Crian√ßa (idade <= 12)
+    mu_assert("Crian√ßa: 10 anos deveria ser R$ 10.00", calcularValor(10) == 10.0);
+    mu_assert("Crian√ßa no limite superior: 12 anos deveria ser R$ 10.00", calcularValor(12) == 10.0);
 
     // Testes para Adulto (13 <= idade <= 59)
     mu_assert("Adulto: 30 anos deveria ser R$ 30.00", calcularValor(30) == 30.0);
@@ -26,15 +26,21 @@ char * test_calcularValor() {
 }
 
 /*
- * NOTA: As funÁıes de entrada como 'lerQuantidade', 'lerNome' e 'lerIdade'
- * n„o s„o testadas unitariamente aqui porque dependem da interaÁ„o direta
- * do usu·rio (teclado). Testes para essas funÁıes exigiriam redirecionamento
+ * NOTA: As fun√ß√µes de entrada como 'lerQuantidade', 'lerNome' e 'lerIdade'
+ * n√£o s√£o testadas unitariamente aqui porque dependem da intera√ß√£o direta
+ * do usu√°rio (teclado). Testes para essas fun√ß√µes exigiriam redirecionamento
  * de entrada, o que torna o teste mais complexo.
  */
 
-// FunÁ„o que executa todos os testes
+// Fun√ß√£o principal de execu√ß√£o dos testes
+char * all_tests() {
+    mu_run_test(test_calcularValor);
+    return 0;
+}
+
+// Fun√ß√£o que executa todos os testes
 char * rodar_testes() {
-    printf("--- EXECUTANDO TESTES UNIT¡RIOS ---\n");
+    printf("--- EXECUTANDO TESTES UNIT√ÅRIOS ---\n");
     char *result = all_tests();
 
     if (result != 0) {
@@ -45,11 +51,5 @@ char * rodar_testes() {
     }
     printf("Testes rodados: %d\n", tests_run);
 
-    return 0;
-}
-
-// FunÁ„o principal de testes
-char * all_tests() {
-    mu_run_test(test_calcularValor);
     return 0;
 }
