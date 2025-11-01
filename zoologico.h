@@ -4,6 +4,9 @@
 #include "minunit.h"
 #include <stdio.h>
 
+// Declaração antecipada da função que será testada
+float calcularValor(int idade);
+
 // Necessário para o MinUnit
 int tests_run = 0;
 
@@ -57,4 +60,3 @@ static char * rodar_testes() {
 }
 
 #endif // TESTES_H
-
