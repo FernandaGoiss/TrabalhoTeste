@@ -1,10 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
+#include <ctype.h>
 #include "zoologico.h"
-#include "minunit.h"
-
-extern int tests_run;
 
 struct ficha {
     char nome[100];
@@ -12,22 +10,22 @@ struct ficha {
     float valor;
 };
 
-// FunÁ„o para ler e validar a quantidade de ingressos
+// Fun√ß√£o para ler e validar a quantidade de ingressos
 int lerQuantidade() {
     int quantidade, resultado;
     do {
-        printf("Qual a quantidade de ingressos que vocÍ deseja comprar?: ");
+        printf("Qual a quantidade de ingressos que voc√™ deseja comprar? ");
         resultado = scanf("%d", &quantidade);
 
         if (resultado != 1) {
-            printf("InformaÁ„o inv·lida. Digite um n˙mero de 1 a 5.\n");
+            printf("Informa√ß√£o inv√°lida. Digite um n√∫mero de 1 a 5.\n");
             while (getchar() != '\n'); // limpa buffer
             quantidade = 0;
             continue;
         }
 
         if (quantidade < 1 || quantidade > 5) {
-            printf("Quantidade inv·lida! Digite novamente (mÌnimo 1, m·ximo 5).\n");
+            printf("Quantidade inv√°lida! Digite novamente (m√≠nimo 1, m√°ximo 5).\n");
         }
 
     } while (quantidade < 1 || quantidade > 5);
@@ -35,7 +33,7 @@ int lerQuantidade() {
     return quantidade;
 }
 
-// FunÁ„o para ler e validar o nome do visitante
+// Fun√ß√£o para ler e validar o nome do visitante
 void lerNome(char *nome) {
     int valido;
     do {
@@ -45,7 +43,7 @@ void lerNome(char *nome) {
 
         int temLetra = 0;
         for (int j = 0; nome[j] != '\0'; j++) {
-            if (isdigit(nome[j])) {
+            if (isdigit((unsigned char)nome[j])) {
                 valido = 0;
                 break;
             }
@@ -59,13 +57,13 @@ void lerNome(char *nome) {
         }
 
         if (!valido) {
-            printf("Nome inv·lido! Digite apenas letras e ao menos uma v·lida.\n");
+            printf("Nome inv√°lido! Digite apenas letras e ao menos uma v√°lida.\n");
         }
 
     } while (!valido);
 }
 
-// FunÁ„o para ler e validar idade
+// Fun√ß√£o para ler e validar idade
 int lerIdade(char *nome) {
     char idadeStr[10];
     int idade, valido;
@@ -75,14 +73,14 @@ int lerIdade(char *nome) {
         scanf(" %[^\n]", idadeStr);
 
         for (int k = 0; idadeStr[k] != '\0'; k++) {
-            if (!isdigit(idadeStr[k])) {
+            if (!isdigit((unsigned char)idadeStr[k])) {
                 valido = 0;
                 break;
             }
         }
 
         if (!valido || idadeStr[0] == '\0') {
-            printf("Idade inv·lida. Tente novamente.\n");
+            printf("Idade inv√°lida. Tente novamente.\n");
             valido = 0;
             continue;
         }
@@ -90,7 +88,7 @@ int lerIdade(char *nome) {
         idade = atoi(idadeStr);
 
         if (idade <= 0 || idade > 110) {
-            printf("Idade inv·lida! Digite entre 1 e 110 anos.\n");
+            printf("Idade inv√°lida! Digite entre 1 e 110 anos.\n");
             valido = 0;
         }
 
@@ -99,14 +97,14 @@ int lerIdade(char *nome) {
     return idade;
 }
 
-// FunÁ„o para calcular o valor do ingresso pela idade
+// Fun√ß√£o para calcular o valor do ingresso pela idade
 float calcularValor(int idade) {
     if (idade <= 12) return 10.0;
     else if (idade <= 59) return 30.0;
     else return 15.0;
 }
 
-// FunÁ„o para exibir o resumo
+// Fun√ß√£o para exibir o resumo dos ingressos
 void exibirResumo(struct ficha ingresso[], int quantidade, float total) {
     printf("\n------------------------------------------------------------\n");
     printf("                     RESUMO DOS INGRESSOS                   \n");
@@ -127,7 +125,7 @@ int main() {
     setlocale(LC_ALL, "");
 
     printf("------------------------------------------------------------\n");
-    printf("                         ZOOL”GICO                          \n");
+    printf("                         ZOOL√ìGICO                          \n");
     printf("------------------------------------------------------------\n");
 
     int quantidade = lerQuantidade();
